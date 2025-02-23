@@ -1,4 +1,4 @@
-import { error } from "./ErrorMessage.modal.css";
+import { error } from "./ErrorMessage.module.css";
 
 function ErrorMessage() {
   return (
