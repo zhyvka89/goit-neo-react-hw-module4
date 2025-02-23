@@ -1,7 +1,9 @@
+import { wrapper, btn } from "./LoadMoreBtn.module.css";
+
 function LoadMoreBtn({onClick}) {
   return (
-    <div>
-      <button type="button" onClick={onClick}>Load More</button>
+    <div className={wrapper}>
+      <button className={btn} type="button" onClick={onClick}>Load More</button>
     </div>
   )
 }

@@ -1,0 +1,13 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  list-style: none;
+  padding: 0;
+}
+
+.item {
+  flex-basis: calc((100% - 2*15px) / 3);
+  height: 300px;
+}

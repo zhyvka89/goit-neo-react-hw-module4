@@ -1,23 +1,24 @@
+import { header, search_form, search_input, search_btn } from "./SearchBar.module.css";
+import { MdImageSearch } from "react-icons/md";
 
-
-function SearchBar({onSubmit}) {
-
-  
-
+function SearchBar({ onSubmit }) {
   return (
-    <header>
-      <form onSubmit={(e) => onSubmit(e)}>
+    <header className={header}>
+      <form className={search_form} onSubmit={(e) => onSubmit(e)}>
         <input
+          className={search_input}
           type="text"
           autoComplete="off"
           autoFocus
           placeholder="Search images and photos"
           name="input"
         />
-        <button type="submit">Search</button>
+        <button className={search_btn} type="submit">
+          <MdImageSearch />
+        </button>
       </form>
     </header>
-  )
+  );
 }
 
-export default SearchBar
+export default SearchBar;

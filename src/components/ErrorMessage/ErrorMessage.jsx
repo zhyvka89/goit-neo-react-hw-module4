@@ -1,6 +1,8 @@
+import { error } from "./ErrorMessage.modal.css";
+
 function ErrorMessage() {
   return (
-    <div>Something went wrong!!!</div>
+    <div className={error}>Something went wrong!!!</div>
   )
 }
 

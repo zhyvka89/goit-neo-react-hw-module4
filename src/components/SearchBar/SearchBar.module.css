@@ -1,0 +1,32 @@
+.header {
+  padding: 30px 0;
+  background-color: mistyrose;
+}
+
+.search_form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.search_input {
+  outline: none;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 5px;
+  color: gray;
+  width: 250px;
+  font-size: 16px;
+}
+
+.search_btn {
+  display: flex;
+  border-radius: 8px;
+  padding: 8px;
+  background-color: white;
+  border: none;
+  outline: none;
+  font-size: 20px;
+  color: magenta;
+}

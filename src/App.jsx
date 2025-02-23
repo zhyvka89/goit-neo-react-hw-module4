@@ -1,14 +1,14 @@
+import { useEffect, useState, useRef } from "react";
+import { ToastContainer, toast } from 'react-toastify';
 import SearchBar from "./components/SearchBar/SearchBar";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import Loader from "./components/Loader/Loader";
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
-
-import "./App.css";
-import { useEffect, useState } from "react";
-import getPhotos from "./services/api";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
-import toast from "react-hot-toast";
 import ImageModal from "./components/ImageModal/ImageModal";
+
+import getPhotos from "./services/api";
+import "./App.css";
 
 function App() {
   const [images, setImages] = useState([]);
@@ -16,14 +16,18 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [page, setPage] = useState(1);
-  const [imageForModal, setImageForModal] = useState('')
+  const [imageForModal, setImageForModal] = useState("");
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [totalPages, setTotalPages] = useState(0);
+  const listRef = useRef();
 
   useEffect(() => {
     if (!searchValue) return;
-
-    getPhotos(searchValue, page, "12")
+    setIsLoading(true);
+    getPhotos(searchValue, page, 12)
       .then((res) => {
         setImages((prevImages) => [...prevImages, ...res.data.results]);
+        setTotalPages(res.data.total_pages);
       })
       .catch(() => {
         setIsError(true);
@@ -40,7 +44,7 @@ function App() {
     const { input } = form.elements;
 
     if (input.value === "") {
-      toast("Please, Write a Prompt!");
+      toast("Please write a query word!");
     } else {
       setSearchValue(input.value);
     }
@@ -48,15 +52,47 @@ function App() {
 
   function handleClick() {
     setPage(page + 1);
+    setTimeout(() => {
+      scrollPage();
+    }, 500);
+  }
+
+  function scrollPage() {
+    const rect = listRef.current.getBoundingClientRect();
+    window.scrollBy({ top: rect.width * 2, behavior: "smooth" });
+  }
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
   }
 
   return (
     <>
       <SearchBar onSubmit={handleSubmit} />
-      {isError ? <ErrorMessage /> : <ImageGallery images={images} />}
+      {isError ? (
+        <ErrorMessage />
+      ) : (
+        <ImageGallery
+          ref={listRef}
+          images={images}
+          openModal={openModal}
+          setImageForModal={setImageForModal}
+        />
+      )}
       {isLoading && <Loader />}
-      {images.length > 0 && <LoadMoreBtn onClick={handleClick} />}
-      <ImageModal/>
+      {images.length > 0 && page < totalPages && (
+        <LoadMoreBtn onClick={handleClick} />
+      )}
+      <ImageModal
+        isOpen={modalIsOpen}
+        image={imageForModal}
+        closeModal={closeModal}
+      />
+      <ToastContainer/>
     </>
   );
 }

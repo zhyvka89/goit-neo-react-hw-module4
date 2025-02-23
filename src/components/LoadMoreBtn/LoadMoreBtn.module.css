@@ -1,0 +1,13 @@
+.wrapper {
+  text-align: center;
+}
+
+.btn {
+  border: 1px solid #ff00ff;
+  outline: none;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: mistyrose;
+  color: gray;
+  font-size: 16px;
+}
